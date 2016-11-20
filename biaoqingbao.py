@@ -9,6 +9,7 @@ from bs4 import BeautifulSoup
 
 
 class BiaoQingBao(object):
+	# 初始化，根据参数生成要爬取的页面的列表
 	def __init__(self, first_page, page_num):
 		self.first_page = first_page
 		self.page_num = page_num
@@ -16,7 +17,8 @@ class BiaoQingBao(object):
 		for i in range(self.first_page, self.first_page + self.page_num):
 			self.url_list.append('http://www.doutula.com/article/list/?page=%d' % i)
 		print(self.url_list)
-	
+		
+	# 爬取主控制器，传入url之后进行爬取操作
 	def craw(self, url):
 		html_source = urllib2.urlopen(url).read()
 		father_page_bsobj = BeautifulSoup(html_source, 'lxml')
@@ -34,7 +36,8 @@ class BiaoQingBao(object):
 				if img['src'].find('large') != -1:
 					print(img['src'])
 					self.img_downloader(group_name, img['src'])
-	
+					
+	# 下载器，被craw调用，下载图片文件
 	def img_downloader(self, group, src):
 		group = re.subn(r'[<>/|:"\'*?]', '_', group)[0]
 		file_path = "./biaoqingbao/" + group
