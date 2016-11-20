@@ -1,4 +1,5 @@
 # coding=utf-8
+# 闲来无聊练练手
 import urllib2
 import codecs
 import re
